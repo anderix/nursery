@@ -1,0 +1,9 @@
+{
+  "driver": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "database": "mydb",
+  "user": "user",
+  "password": "pass",
+  "listen": ":8080"
+}
