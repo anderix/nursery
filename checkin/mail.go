@@ -50,7 +50,7 @@ func (g *GraphClient) UnreadEmails() ([]Email, error) {
 
 	emails := make([]Email, len(result.Value))
 	for i, e := range result.Value {
-		received, _ := time.Parse(time.RFC3339, e.ReceivedDateTime)
+		received, _ := time.Parse(time.RFC3339Nano, e.ReceivedDateTime)
 		emails[i] = Email{
 			ID:       e.ID,
 			Subject:  e.Subject,

@@ -82,7 +82,7 @@ func (g *GraphClient) PendingChats() ([]ChatMessage, error) {
 			continue
 		}
 
-		sent, _ := time.Parse(time.RFC3339, chat.LastMessagePreview.CreatedDateTime)
+		sent, _ := time.Parse(time.RFC3339Nano, chat.LastMessagePreview.CreatedDateTime)
 
 		// Only show messages from the last 24 hours
 		if sent.Before(cutoff) {
@@ -152,7 +152,7 @@ func (g *GraphClient) GetChatMessages(chatID string, count int) ([]ChatMessage, 
 		if m.From != nil && m.From.User != nil {
 			msg.From = m.From.User.DisplayName
 		}
-		msg.Sent, _ = time.Parse(time.RFC3339, m.CreatedDateTime)
+		msg.Sent, _ = time.Parse(time.RFC3339Nano, m.CreatedDateTime)
 		messages = append(messages, msg)
 	}
 
