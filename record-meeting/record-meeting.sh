@@ -64,7 +64,10 @@ stop_recording() {
     if [ -f "$OUTPUT" ] && [ -s "$OUTPUT" ]; then
         echo "Saved: $OUTPUT"
         echo ""
-        echo "Transcribe with: transcribe $OUTPUT"
+        read -rp "Run transcribe $OUTPUT now? [Y/n] " answer
+        if [[ ! "$answer" =~ ^[Nn]$ ]]; then
+            transcribe "$OUTPUT"
+        fi
     else
         echo "Warning: Output file is empty or missing."
     fi
