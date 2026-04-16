@@ -32,6 +32,7 @@ PID_MIC=""
 PID_SYS=""
 START_TIME=$SECONDS
 STOPPING=0
+STEREO=0
 
 stop_recording() {
     [ "$STOPPING" -eq 1 ] && return
@@ -47,16 +48,21 @@ stop_recording() {
     echo ""
     echo "Stopped. Duration: ${MINS}m ${SECS}s"
 
-    # Merge the two streams into one mono file
+    # Pack the two streams into a stereo file: mic=left, system=right.
+    # transcribe --split will demux and label the channels at transcription
+    # time. If only one stream has audio, fall back to mono.
     if [ -s "$TMP_MIC" ] && [ -s "$TMP_SYS" ]; then
-        echo "Merging mic + system audio..."
+        echo "Packing mic + system audio (stereo: L=mic, R=sys)..."
         ffmpeg -y -i "$TMP_MIC" -i "$TMP_SYS" \
-            -filter_complex "[0:a][1:a]amix=inputs=2:duration=longest[out]" \
-            -map "[out]" -ar 16000 -ac 1 "$OUTPUT" 2>/dev/null
+            -filter_complex "[0:a][1:a]amerge=inputs=2[out]" \
+            -map "[out]" -ar 16000 -ac 2 "$OUTPUT" 2>/dev/null
+        STEREO=1
     elif [ -s "$TMP_MIC" ]; then
         ffmpeg -y -i "$TMP_MIC" -ar 16000 -ac 1 "$OUTPUT" 2>/dev/null
+        STEREO=0
     elif [ -s "$TMP_SYS" ]; then
         ffmpeg -y -i "$TMP_SYS" -ar 16000 -ac 1 "$OUTPUT" 2>/dev/null
+        STEREO=0
     fi
 
     rm -f "$TMP_MIC" "$TMP_SYS"
@@ -66,7 +72,11 @@ stop_recording() {
         echo ""
         read -rp "Run transcribe $OUTPUT now? [Y/n] " answer
         if [[ ! "$answer" =~ ^[Nn]$ ]]; then
-            transcribe "$OUTPUT"
+            if [ "$STEREO" -eq 1 ]; then
+                transcribe --split "$OUTPUT"
+            else
+                transcribe "$OUTPUT"
+            fi
         fi
     else
         echo "Warning: Output file is empty or missing."
