@@ -141,11 +141,20 @@ echo ""
 echo "--- Verifying essentials ---"
 ESSENTIALS="gdm3 gnome-shell gnome-session gnome-settings-daemon gnome-control-center gnome-keyring gnome-terminal nautilus firefox-esr gnome-tweaks gnome-sushi gnome-calculator file-roller evince loupe gnome-text-editor gnome-system-monitor gnome-disk-utility network-manager"
 MISSING=""
+UNAVAILABLE=""
 for pkg in $ESSENTIALS; do
     if ! dpkg -l "$pkg" 2>/dev/null | grep -q "^ii"; then
-        MISSING="$MISSING $pkg"
+        if apt-cache show "$pkg" >/dev/null 2>&1; then
+            MISSING="$MISSING $pkg"
+        else
+            UNAVAILABLE="$UNAVAILABLE $pkg"
+        fi
     fi
 done
+
+if [[ -n "$UNAVAILABLE" ]]; then
+    echo "Skipping packages not in this Debian's repos:$UNAVAILABLE"
+fi
 
 if [[ -n "$MISSING" ]]; then
     echo "Reinstalling packages that were accidentally removed:$MISSING"
