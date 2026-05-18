@@ -8,7 +8,7 @@ Small tools in various stages of growth. When something here matures enough to s
 |---|---|
 | **csv_splitter.py** | Splits CSV files into smaller chunks |
 | **docx-diff** | Diff tool for `.docx` files |
-| **naked-gnome** | `strip-gnome.sh` + `review-installed.sh` — audit and trim a fat Debian + GNOME install |
+| **naked-gnome** | Audit and trim a fat Debian + GNOME install — packages, autostart, services, firmware, gsettings, disk junk |
 | **pdf-extract** | Extract text/content from PDFs |
 | **record-meeting** | Record meetings with mic + system audio captured separately |
 | **screen-ocr** | OCR on a screen region |
