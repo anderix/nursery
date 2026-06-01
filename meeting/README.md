@@ -46,7 +46,7 @@ and whisper.cpp (built by `install.sh`).
 ### Install dependencies (Debian)
 
 ```
-sudo apt install -y git cmake g++ ffmpeg pipewire pipewire-utils
+sudo apt install -y git cmake g++ ffmpeg pipewire pipewire-bin wireplumber
 ```
 
 ## Install
