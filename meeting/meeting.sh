@@ -100,11 +100,12 @@ cmd_record() {
         exit 1
     fi
 
-    local pid_mic="" pid_sys="" start_time=$SECONDS stopping=0 stereo=0
+    local pid_mic="" pid_sys="" start_time=$SECONDS stereo=0
 
     stop_recording() {
-        [ "$stopping" -eq 1 ] && return
-        stopping=1
+        # Disarm immediately so INT-then-EXIT can't run this twice (the second
+        # call would hit out-of-scope locals under `set -u`).
+        trap - INT TERM EXIT
 
         [ -n "$pid_mic" ] && kill "$pid_mic" 2>/dev/null
         [ -n "$pid_sys" ] && kill "$pid_sys" 2>/dev/null
