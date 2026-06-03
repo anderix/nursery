@@ -30,3 +30,12 @@ sudo apt install -y gnome-screenshot wl-clipboard tesseract-ocr tesseract-ocr-en
 ```
 
 Copies `screen-ocr` to `~/bin/`.
+
+## Uninstall
+
+```
+./uninstall.sh
+```
+
+Removes `~/bin/screen-ocr`. The shared `~/bin` PATH entry in `.bashrc` is left
+alone.

@@ -30,3 +30,12 @@ sudo apt install -y pandoc colordiff
 ```
 
 Copies `docx-diff` to `~/bin/`.
+
+## Uninstall
+
+```
+./uninstall.sh
+```
+
+Removes `~/bin/docx-diff`. The shared `~/bin` PATH entry in `.bashrc` is left
+alone.

@@ -61,3 +61,14 @@ size to add more models.
 
 > **Disk note:** the `medium` model is ~1.5 GB and the build adds a few hundred
 > MB more. Make sure the target has a couple of GB free before installing.
+
+## Uninstall
+
+```
+./uninstall.sh
+```
+
+Removes `~/bin/meeting`, then asks whether to also delete the built
+`whisper.cpp/` tree and downloaded models (~2 GB; kept by default, since
+rebuilding and redownloading are slow). The shared `~/bin` PATH entry in
+`.bashrc` is left alone.

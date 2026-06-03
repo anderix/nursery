@@ -35,3 +35,12 @@ sudo apt install -y poppler-utils tesseract-ocr tesseract-ocr-eng
 ```
 
 Copies `pdf-extract` to `~/bin/`.
+
+## Uninstall
+
+```
+./uninstall.sh
+```
+
+Removes `~/bin/pdf-extract`. The shared `~/bin` PATH entry in `.bashrc` is left
+alone.
