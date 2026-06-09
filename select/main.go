@@ -71,8 +71,29 @@ type Config struct {
 
 var namePattern = regexp.MustCompile(`^[a-zA-Z_][a-zA-Z0-9_.]*$`)
 
+// Stamped at build time via -ldflags. Plain `go build` leaves it as "(devel)".
+var version = "(devel)"
+
 func main() {
 	configPath := flag.String("config", "select.json", "path to config file")
+	flag.Usage = func() {
+		fmt.Fprintln(os.Stderr, "select — tiny HTTP server that turns URL paths into SQL")
+		fmt.Fprintln(os.Stderr)
+		fmt.Fprintln(os.Stderr, "Usage: select [flags]")
+		fmt.Fprintln(os.Stderr)
+		fmt.Fprintln(os.Stderr, "Flags:")
+		flag.PrintDefaults()
+	}
+	if len(os.Args) > 1 {
+		switch os.Args[1] {
+		case "--version", "-V":
+			fmt.Println("select " + version)
+			return
+		case "--help", "-h":
+			flag.Usage()
+			return
+		}
+	}
 	flag.Parse()
 
 	cfg, err := loadConfig(*configPath)
