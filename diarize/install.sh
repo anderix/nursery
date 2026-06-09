@@ -1,9 +1,13 @@
 #!/bin/bash
 # install.sh - Install the EXPERIMENTAL `diarize` test harness.
 #
-# Pulls the prebuilt static sherpa-onnx binary (no pip, no PyTorch, no compile)
-# and the two diarization ONNX models, then installs `diarize` to ~/bin with the
-# sherpa, model, and (reused) whisper paths baked in.
+# Pulls the prebuilt sherpa-onnx binary (no pip, no PyTorch, no compile) and the
+# two diarization ONNX models, then installs `diarize` to ~/bin with the sherpa,
+# model, and (reused) whisper paths baked in.
+#
+# Uses the shared-no-tts build (~24 MB): it carries the diarization binary plus
+# its shared libs, and is ~14x smaller than the self-contained static build
+# (~320 MB). diarize.sh sets LD_LIBRARY_PATH so the shared libs resolve.
 #
 # Whisper itself is NOT downloaded here: diarize reuses the build from the
 # sibling `meeting` tool. Install/build that first.
@@ -31,13 +35,13 @@ done
 if [ -x "$SHERPA_DIR/bin/sherpa-onnx-offline-speaker-diarization" ]; then
     echo "sherpa-onnx already present, skipping download."
 else
-    echo "Resolving latest sherpa-onnx static linux-x64 release..."
+    echo "Resolving latest sherpa-onnx shared-no-tts linux-x64 release..."
     url="${SHERPA_TARBALL_URL:-}"
     if [ -z "$url" ]; then
         url=$(curl -fsSL "https://api.github.com/repos/k2-fsa/sherpa-onnx/releases/latest" \
-            | grep -o 'https://[^"]*linux-x64-static\.tar\.bz2' | head -1) || true
+            | grep -o 'https://[^"]*linux-x64-shared-no-tts\.tar\.bz2' | head -1) || true
     fi
-    [ -n "$url" ] || { echo "Error: could not find a linux-x64-static tarball. Set SHERPA_TARBALL_URL=<url> from https://github.com/k2-fsa/sherpa-onnx/releases" >&2; exit 1; }
+    [ -n "$url" ] || { echo "Error: could not find a linux-x64-shared-no-tts tarball. Set SHERPA_TARBALL_URL=<url> from https://github.com/k2-fsa/sherpa-onnx/releases" >&2; exit 1; }
     echo "  $url"
     tmp="$(mktemp /tmp/sherpa_XXXXXX.tar.bz2)"
     curl -fL "$url" -o "$tmp"

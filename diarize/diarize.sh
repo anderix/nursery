@@ -156,8 +156,9 @@ main() {
     "$SHERPA_BIN" \
         --segmentation.pyannote-model="$SEG_MODEL" \
         --embedding.model="$EMB_MODEL" \
+        --segmentation.num-threads=4 \
+        --embedding.num-threads=4 \
         "$cluster_flag" \
-        --num-threads=4 \
         "$tmp_wav" > "$diar_raw" 2>&1
     set +x
 

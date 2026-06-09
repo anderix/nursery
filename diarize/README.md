@@ -21,8 +21,8 @@ is on which channel. Speakers are anonymous clusters; naming is a later phase.
 ## Why sherpa-onnx (not pyannote)
 
 Same diarization quality, but pure C++/ONNX — no pip, no PyTorch, no HuggingFace
-token. The installer pulls a prebuilt static binary and two small ONNX models
-(tens of MB, not gigabytes).
+token. The installer pulls a prebuilt binary (the ~24 MB shared-no-tts build)
+and two small ONNX models — tens of MB, not gigabytes.
 
 ## Dependencies
 
@@ -39,9 +39,9 @@ token. The installer pulls a prebuilt static binary and two small ONNX models
 ./install.sh
 ```
 
-Downloads the prebuilt static sherpa-onnx binary (resolved from the latest
-GitHub release), the pyannote segmentation model, and an English speaker-
-embedding model, then installs `diarize` to `~/bin/`.
+Downloads the prebuilt sherpa-onnx binary (the shared-no-tts build, resolved
+from the latest GitHub release), the pyannote segmentation model, and an English
+speaker-embedding model, then installs `diarize` to `~/bin/`.
 
 > If a model download 404s, the release asset was renamed. Check the
 > [sherpa-onnx releases](https://github.com/k2-fsa/sherpa-onnx/releases) and set
