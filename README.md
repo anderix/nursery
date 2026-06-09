@@ -11,6 +11,7 @@ Small tools in various stages of growth. When something here matures enough to s
 | **naked-gnome** | Audit and trim a fat Debian + GNOME install — packages, autostart, services, firmware, gsettings, disk junk |
 | **pdf-extract** | Extract text/content from PDFs |
 | **meeting** | Record a meeting (mic + system audio, separate channels) and transcribe it locally with whisper.cpp |
+| **diarize** | _Experimental._ Speaker-diarization test harness (whisper + sherpa-onnx); proving ground before it joins `meeting` |
 | **screen-ocr** | OCR on a screen region |
 | **select** | Database viewer — URL paths as SQL, returns HTML/CSV/JSON |
 
