@@ -8,6 +8,7 @@ Small tools in various stages of growth. When something here matures enough to s
 |---|---|
 | **csv_splitter.py** | Splits CSV files into smaller chunks |
 | **docx-diff** | Diff tool for `.docx` files |
+| **office-convert** | Convert Markdown/CSV ↔ Word/Excel/PowerPoint (md→docx/pptx, csv↔xlsx) via pandoc + openpyxl |
 | **naked-gnome** | Audit and trim a fat Debian + GNOME install — packages, autostart, services, firmware, gsettings, disk junk |
 | **pdf-extract** | Extract text/content from PDFs |
 | **meeting** | Record a meeting (mic + system audio, separate channels) and transcribe it locally with whisper.cpp |
