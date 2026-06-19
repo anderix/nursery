@@ -2,6 +2,16 @@
 
 Small tools in various stages of growth. When something here matures enough to stand on its own, it graduates to its own repository.
 
+## Install
+
+Each tool keeps its own `install.sh` (copying it into `~/bin`). To set up a box in one pass:
+
+```bash
+git pull && ./install-all.sh
+```
+
+That installs the quick tools. The heavy ones — `meeting` (builds whisper.cpp) and `diarize` (downloads models) — are opt-in, so a sync never triggers a long compile: `./install-all.sh meeting`. `naked-gnome` and `select` manage their own setup and are left alone.
+
 ## Current
 
 | Tool | Description |
