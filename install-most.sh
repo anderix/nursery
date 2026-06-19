@@ -1,8 +1,8 @@
 #!/bin/bash
-# install-all.sh - Install nursery tools into ~/bin in one pass.
+# install-most.sh - Install nursery tools into ~/bin in one pass.
 #
 # Each tool keeps its own install.sh; this runs them together, which is what you
-# want when putting the toolkit on a fresh box: `git pull && ./install-all.sh`.
+# want when putting the toolkit on a fresh box: `git pull && ./install-most.sh`.
 #
 # By default it installs only the quick, copy-into-~/bin tools. The heavy ones
 # (meeting builds whisper.cpp from source; diarize downloads model tarballs and
@@ -10,9 +10,9 @@
 # or a large download you didn't ask for. Install those deliberately by name.
 #
 # Usage:
-#   ./install-all.sh            install every quick tool
-#   ./install-all.sh meeting    install only the named tools, heavy or not
-#   ./install-all.sh --all      install everything, heavy included
+#   ./install-most.sh            install every quick tool
+#   ./install-most.sh meeting    install only the named tools, heavy or not
+#   ./install-most.sh --all      install everything, heavy included
 #
 # Tools without an install.sh (naked-gnome runs in place, select is a Go build)
 # manage their own setup; they are reported but not touched.
@@ -32,12 +32,12 @@ is_heavy() {
 
 usage() {
     cat <<'EOF'
-install-all.sh - install nursery tools into ~/bin in one pass
+install-most.sh - install nursery tools into ~/bin in one pass
 
 Usage:
-  ./install-all.sh            install every quick tool
-  ./install-all.sh meeting    install only the named tools, heavy or not
-  ./install-all.sh --all      install everything, heavy included
+  ./install-most.sh            install every quick tool
+  ./install-most.sh meeting    install only the named tools, heavy or not
+  ./install-most.sh --all      install everything, heavy included
 
 Heavy tools (meeting, diarize) build or download, so they are opt-in.
 Tools without an install.sh (naked-gnome, select) manage their own setup.
@@ -114,7 +114,7 @@ echo
 echo "Installed: ${installed[*]:-none}"
 [ ${#skipped_heavy[@]} -gt 0 ] && {
     echo "Skipped (heavy, opt-in): ${skipped_heavy[*]}"
-    echo "  -> to install them: ./install-all.sh ${skipped_heavy[*]}"
+    echo "  -> to install them: ./install-most.sh ${skipped_heavy[*]}"
 }
 [ ${#no_installer[@]} -gt 0 ] && echo "No install.sh (manage their own setup): ${no_installer[*]}"
 [ ${#failed[@]} -gt 0 ] && { echo "Failed: ${failed[*]}"; exit 1; }
