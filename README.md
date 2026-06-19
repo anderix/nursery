@@ -16,6 +16,7 @@ That installs the quick tools. The heavy ones — `meeting` (builds whisper.cpp)
 
 | Tool | Description |
 |---|---|
+| **install-most.sh** | One-pass installer — runs each tool's `install.sh`, holding back the heavy builds (`meeting`, `diarize`) unless named |
 | **ask** | One-shot terminal questions for Claude — a terse, fast-model `claude -p` wrapper with no follow-up |
 | **csv_splitter.py** | Splits CSV files into smaller chunks |
 | **docx-diff** | Diff tool for `.docx` files |
