@@ -6,6 +6,7 @@ Small tools in various stages of growth. When something here matures enough to s
 
 | Tool | Description |
 |---|---|
+| **ask** | One-shot terminal questions for Claude — a terse, fast-model `claude -p` wrapper with no follow-up |
 | **csv_splitter.py** | Splits CSV files into smaller chunks |
 | **docx-diff** | Diff tool for `.docx` files |
 | **office-convert** | Convert Markdown/CSV ↔ Word/Excel/PowerPoint (md→docx/pptx, csv↔xlsx) via pandoc + openpyxl |
