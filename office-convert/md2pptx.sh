@@ -36,5 +36,5 @@ elif [ -f "$(dirname "$IN")/reference.pptx" ]; then
     ref_args=(--reference-doc "$(dirname "$IN")/reference.pptx")
 fi
 
-pandoc "$IN" --from=markdown --to=pptx "${ref_args[@]}" -o "$OUT"
+pandoc "$IN" --from=markdown-auto_identifiers --to=pptx "${ref_args[@]}" -o "$OUT"
 echo "Wrote: $OUT"
