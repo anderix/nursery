@@ -8,6 +8,7 @@ Batch-extracts text from PDF files. Uses `pdftotext` for native PDFs, automatica
 pdf-extract file.pdf
 pdf-extract /path/to/directory/
 pdf-extract /path/to/directory/ --output /path/to/output/
+pdf-extract /path/to/corpus/ --recursive
 ```
 
 Skips files that already have a newer `.txt` output, so re-running is safe and fast.
@@ -15,6 +16,8 @@ Skips files that already have a newer `.txt` output, so re-running is safe and f
 ## Output
 
 Text files are created alongside the originals (same directory, `.txt` extension) unless `--output` specifies a different directory.
+
+By default a directory is processed one level deep. Pass `--recursive` to descend into subdirectories; combined with `--output`, the input's subfolder structure is mirrored under the output directory, so identically named files in different subfolders don't collide.
 
 ## Dependencies
 

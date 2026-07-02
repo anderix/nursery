@@ -1,15 +1,16 @@
 #!/bin/bash
 # pdf-extract - Extract text from PDFs, with OCR fallback for scanned documents
 #
-# Usage: pdf-extract <file.pdf|directory> [--output <dir>]
+# Usage: pdf-extract <file.pdf|directory> [--output <dir>] [--recursive]
 #
 # For single files: produces file.txt alongside the PDF (or in output dir)
 # For directories: processes all PDFs, skips already-extracted files
+# With --recursive, descends into subdirectories (default: top level only)
 
 set -euo pipefail
 
 usage() {
-    echo "Usage: pdf-extract <file.pdf|directory> [--output <dir>]"
+    echo "Usage: pdf-extract <file.pdf|directory> [--output <dir>] [--recursive]"
     exit 1
 }
 
@@ -21,11 +22,16 @@ INPUT="$1"
 shift
 
 OUTPUT_DIR=""
+RECURSIVE=0
 while [ $# -gt 0 ]; do
     case "$1" in
         --output)
             OUTPUT_DIR="$2"
             shift 2
+            ;;
+        --recursive)
+            RECURSIVE=1
+            shift
             ;;
         *)
             echo "Unknown option: $1"
@@ -161,11 +167,17 @@ extract_one() {
 
 process_pdf() {
     local pdf="$1"
+    local base="${2:-}"        # input root, used to mirror subdirs under --output
     local txt_out
 
     if [ -n "$OUTPUT_DIR" ]; then
-        mkdir -p "$OUTPUT_DIR"
-        txt_out="$OUTPUT_DIR/$(basename "${pdf%.pdf}.txt")"
+        if [ -n "$base" ]; then
+            local rel="${pdf#"$base"/}"          # path relative to the input root
+            txt_out="$OUTPUT_DIR/${rel%.pdf}.txt" # same subpath under OUTPUT_DIR
+        else
+            txt_out="$OUTPUT_DIR/$(basename "${pdf%.pdf}.txt")"
+        fi
+        mkdir -p "$(dirname "$txt_out")"
     else
         txt_out="${pdf%.pdf}.txt"
     fi
@@ -183,12 +195,19 @@ if [ -f "$INPUT" ]; then
     process_pdf "$(realpath "$INPUT")"
 elif [ -d "$INPUT" ]; then
     # Directory batch mode
-    echo "Processing PDFs in: $INPUT"
+    root="$(realpath "$INPUT")"
+    depth_args=(-maxdepth 1)
+    [ "$RECURSIVE" -eq 1 ] && depth_args=()
+    if [ "$RECURSIVE" -eq 1 ]; then
+        echo "Processing PDFs in: $INPUT (recursive)"
+    else
+        echo "Processing PDFs in: $INPUT"
+    fi
     found=0
     while IFS= read -r -d '' pdf; do
         found=1
-        process_pdf "$pdf"
-    done < <(find "$(realpath "$INPUT")" -maxdepth 1 -iname '*.pdf' -print0 | sort -z)
+        process_pdf "$pdf" "$root"
+    done < <(find "$root" "${depth_args[@]}" -iname '*.pdf' -print0 | sort -z)
 
     if [ "$found" -eq 0 ]; then
         echo "No PDF files found in $INPUT"
