@@ -19,7 +19,7 @@ That installs the quick tools. The heavy ones — `meeting` (builds whisper.cpp)
 | **install-most.sh** | One-pass installer — runs each tool's `install.sh`, holding back the heavy builds (`meeting`, `diarize`) unless named |
 | **ask** | One-shot terminal questions for Claude — a terse, fast-model `claude -p` wrapper with no follow-up |
 | **boxes-remote** | View one machine's Gnome Boxes VMs from another over SSH — host setup, client setup, and per-VM desktop launchers |
-| **csv_splitter.py** | Splits CSV files into smaller chunks |
+| **csv-splitter** | Split a large CSV into upload-sized chunks (~25 MB each), header repeated per chunk |
 | **docx-diff** | Diff tool for `.docx` files |
 | **office-convert** | Convert Markdown/CSV ↔ Word/Excel/PowerPoint (md→docx/pptx, csv↔xlsx) via pandoc + openpyxl |
 | **naked-gnome** | Audit and trim a fat Debian + GNOME install — packages, autostart, services, firmware, gsettings, disk junk |

@@ -3,7 +3,8 @@
 Split a large CSV file into smaller chunks suitable for upload.
 Target size: ~25 MB per chunk (safe for most upload limits)
 
-Author: Claude.ai (Anthropic)
+Author: David M. Anderson
+Built with AI assistance (Claude, Anthropic)
 """
 
 import csv
