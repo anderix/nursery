@@ -36,6 +36,7 @@ md2docx report.md                 # -> report.docx
 md2docx report.md final.docx      # explicit output
 docx2md proposal.docx             # -> proposal.md (images to ./media/)
 csv2xlsx data.csv                 # -> data.xlsx (styled, typed)
+csv2xlsx a.csv b.csv -o book.xlsx # -> one sheet per CSV, named by file stem
 xlsx2csv workbook.xlsx --sheet Q3 # -> workbook.csv from the Q3 sheet
 md2pptx deck.md                   # -> deck.pptx
 ```
@@ -57,6 +58,11 @@ dates as dates, but only when the conversion is lossless. Values Excel famously
 mangles are kept as text: leading-zero codes (`007`, zip codes), phone-style
 strings (`+1 555...`), and digit runs longer than 15. Pass `--text` to disable
 inference entirely and write every cell verbatim.
+
+Given several CSVs and an `-o` output, `csv2xlsx` writes one workbook with a
+sheet per CSV, titled after each input's filename stem (sanitized and de-duped
+for Excel's sheet-name rules), in the order given. A single input keeps the
+plain `csv2xlsx input [output]` form; only two or more inputs need `-o`.
 
 ### Slide division (md2pptx)
 
