@@ -6,7 +6,7 @@
 #
 # By default it installs only the quick, copy-into-~/bin tools. The heavy ones
 # (meeting builds whisper.cpp from source; diarize downloads model tarballs and
-# is shelved; ditto needs the Go toolchain to compile) are opt-in, so a fleet
+# is shelved) are opt-in, so a fleet
 # sync never kicks off a compile or a large download you didn't ask for. Install
 # those deliberately by name.
 #
@@ -23,7 +23,7 @@ set -uo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 
 # Tools whose install.sh compiles or downloads — skipped unless asked for.
-HEAVY=(meeting diarize ditto)
+HEAVY=(meeting diarize)
 
 is_heavy() {
     local h
@@ -40,7 +40,7 @@ Usage:
   ./install-most.sh meeting    install only the named tools, heavy or not
   ./install-most.sh --all      install everything, heavy included
 
-Heavy tools (meeting, diarize, ditto) build or download, so they are opt-in.
+Heavy tools (meeting, diarize) build or download, so they are opt-in.
 Tools without an install.sh (naked-gnome, select) manage their own setup.
 EOF
 }
