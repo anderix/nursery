@@ -21,7 +21,6 @@ That installs the quick tools. The heavy ones — `meeting` (builds whisper.cpp)
 | **boxes-remote** | View one machine's Gnome Boxes VMs from another over SSH — host setup, client setup, and per-VM desktop launchers |
 | **csv-splitter** | Split a large CSV into upload-sized chunks (~25 MB each), header repeated per chunk |
 | **docx-diff** | Diff tool for `.docx` files |
-| **office-convert** | Convert Markdown/CSV ↔ Word/Excel/PowerPoint (md→docx/pptx, csv↔xlsx) via pandoc + openpyxl |
 | **naked-gnome** | Audit and trim a fat Debian + GNOME install — packages, autostart, services, firmware, gsettings, disk junk |
 | **pdf-extract** | Extract text/content from PDFs |
 | **meeting** | Record a meeting (mic + system audio, separate channels) and transcribe it locally with whisper.cpp |
@@ -34,3 +33,5 @@ That installs the quick tools. The heavy ones — `meeting` (builds whisper.cpp)
 | Tool | Description | Repo |
 |---|---|---|
 | **ved** | The verbose ed — a drop-in ed clone in pure-stdlib Rust | [excelano/ved](https://github.com/excelano/ved) |
+| **ditto** | Cargo for documents — build Office and HTML deliverables from text sources, then publish to SharePoint | [excelano/ditto](https://github.com/excelano/ditto) |
+| **office-convert** | Convert Markdown/CSV ↔ Word/Excel/PowerPoint (md→docx/pptx, csv↔xlsx) via pandoc + openpyxl | [excelano/office-convert](https://github.com/excelano/office-convert) |
