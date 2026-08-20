@@ -17,7 +17,6 @@ That installs the quick tools. The heavy ones — `meeting` (builds whisper.cpp)
 | Tool | Description |
 |---|---|
 | **install-most.sh** | One-pass installer — runs each tool's `install.sh`, holding back the heavy builds (`meeting`, `diarize`) unless named |
-| **ask** | One-shot terminal questions for Claude — a terse, fast-model `claude -p` wrapper with no follow-up |
 | **boxes-remote** | View one machine's Gnome Boxes VMs from another over SSH — host setup, client setup, and per-VM desktop launchers |
 | **csv-splitter** | Split a large CSV into upload-sized chunks (~25 MB each), header repeated per chunk |
 | **docx-diff** | Diff tool for `.docx` files |
@@ -32,6 +31,7 @@ That installs the quick tools. The heavy ones — `meeting` (builds whisper.cpp)
 
 | Tool | Description | Repo |
 |---|---|---|
+| **aski** | One-shot questions for command-line LLMs — succeeds `ask`, which wrapped one hard-coded `claude -p` invocation | [excelano/aski](https://github.com/excelano/aski) |
 | **ved** | The verbose ed — a drop-in ed clone in pure-stdlib Rust | [excelano/ved](https://github.com/excelano/ved) |
 | **ditto** | Cargo for documents — build Office and HTML deliverables from text sources, then publish to SharePoint | [excelano/ditto](https://github.com/excelano/ditto) |
 | **office-convert** | Convert Markdown/CSV ↔ Word/Excel/PowerPoint (md→docx/pptx, csv↔xlsx) via pandoc + openpyxl | [excelano/office-convert](https://github.com/excelano/office-convert) |
