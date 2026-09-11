@@ -3,7 +3,7 @@
 > **Verdict (2026-06-16): shelved.** This harness answered its question, and the
 > answer was no. Across two real meetings, sherpa-onnx could not reliably separate
 > speakers on the mono audio the `meeting` tool captures — it collapsed distinct
-> people (Alyssa and Tony, two main speakers in one test) into a single cluster,
+> people (the two main speakers in one test) into a single cluster,
 > worst on phone-joined / far-field recordings where every voice arrives through
 > one speaker. Confident misattribution is worse than the honest "don't know" you
 > get from plain transcription, so this is **not** graduating into `meeting`; that
