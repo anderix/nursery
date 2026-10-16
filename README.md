@@ -26,6 +26,7 @@ That installs the quick tools. The heavy ones — `meeting` (builds whisper.cpp)
 | **diarize** | _Experimental._ Speaker-diarization test harness (whisper + sherpa-onnx); proving ground before it joins `meeting` |
 | **screen-ocr** | OCR on a screen region |
 | **select** | Database viewer — URL paths as SQL, returns HTML/CSV/JSON |
+| **utf8rescue** | Convert Windows-1252 text to UTF-8, including files that mix the two, which iconv corrupts |
 
 ## Graduated
 
