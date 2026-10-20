@@ -27,6 +27,7 @@ That installs the quick tools. The heavy ones — `meeting` (builds whisper.cpp)
 | **screen-ocr** | OCR on a screen region |
 | **select** | Database viewer — URL paths as SQL, returns HTML/CSV/JSON |
 | **utf8rescue** | Convert Windows-1252 text to UTF-8, including files that mix the two, which iconv corrupts |
+| **xplan** | Create, read, update and delete Microsoft Planner tasks over Graph |
 
 ## Graduated
 
