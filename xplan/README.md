@@ -21,13 +21,20 @@ The first command run from an interactive terminal prints a device code and a UR
 ```bash
 xplan plans
 xplan tasks "Website relaunch" --bucket Doing
-xplan tasks --assignee me --status all
-xplan add "Website relaunch" "Draft the launch post" --due 2026-11-02 --assign me --priority important
+xplan tasks --assignee me --overdue
+xplan add "Website relaunch" "Draft the launch post" --due fri --assign me --label Client
 xplan set <task-id> --progress done
-xplan show <task-id>
-xplan rm <task-id>
+xplan check add <task-id> "Get sign-off from legal"
+xplan bucket add "Website relaunch" Review
+xplan label name "Website relaunch" 3 Blocked
 ```
 
-A plan or bucket is named by its title or its ID; a task by its ID, which `xplan tasks` prints first on each line and `xplan add` prints on its own. `xplan tasks` with no plan lists the tasks assigned to you across every plan. Every command takes `--json` for output a program can read, and `xplan <command> -h` lists the command's flags.
+Listings are plural nouns (`plans`, `buckets`, `labels`, `tasks`); changes to a plan, bucket, label or checklist are a singular noun and an action (`bucket rename`, `check done`); tasks themselves are `add`, `set`, `show` and `rm`. `xplan -h` lists every command and `xplan <command> -h` its flags.
 
-`--notes -` reads a task's notes from standard input. Planner refuses a change to a task that does not name the version it replaces, so `set` and `rm` read the task immediately before writing it; if someone changes it in between, xplan says so and the command can be run again.
+A plan or bucket is named by its title or its ID, and a label by its name or its slot number (Planner offers 25 per plan). A task is named by its ID, which `xplan tasks` prints first on each line and `xplan add` prints on its own; a checklist item by the number `xplan show` prints beside it. `xplan tasks` with no plan lists the tasks assigned to you across every plan. Listings, `show` and `add` take `--json`.
+
+Dates take `YYYY-MM-DD`, `today`, `tomorrow`, a weekday (the next one after today), `+3d` or `+2w`, and `none` clears one. `--notes -` reads a task's notes from standard input.
+
+Planner refuses a change that does not name the version it replaces, so xplan reads each item immediately before writing it; if someone changes it in between, xplan says so and the command can be run again. Deleting a bucket through Graph leaves its tasks behind, pointing at a bucket that no longer exists, so `bucket rm` refuses a bucket that holds tasks, and with `--force` deletes the tasks first.
+
+Creating, deleting and moving whole plans stays in the Planner web app: a plan belongs to a Microsoft 365 group, and xplan's permissions do not reach groups.

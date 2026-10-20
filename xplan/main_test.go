@@ -36,6 +36,17 @@ func TestRunInvocationContract(t *testing.T) {
 		{[]string{"set", "id", "--progress", "50"}, 2},
 		{[]string{"add", "plan", "title", "--priority", "high"}, 2},
 		{[]string{"set", "id", "--title", ""}, 2},
+		{[]string{"set", "id", "--start", "soon"}, 2},
+		{[]string{"tasks", "--priority", "high"}, 2},
+		{[]string{"tasks", "--due-before", "later"}, 2},
+		{[]string{"bucket"}, 2},
+		{[]string{"bucket", "-h"}, 0},
+		{[]string{"bucket", "move"}, 2},
+		{[]string{"bucket", "add", "plan"}, 2},
+		{[]string{"label", "name", "plan", "26", "x"}, 2},
+		{[]string{"check", "done", "id", "0"}, 2},
+		{[]string{"check", "add", "id", ""}, 2},
+		{[]string{"plan", "rename", "plan", ""}, 2},
 	}
 	for _, c := range cases {
 		var out, errOut bytes.Buffer
@@ -61,20 +72,38 @@ func TestReorderHoistsFlagsAfterOperands(t *testing.T) {
 	}
 }
 
-func TestParseDue(t *testing.T) {
-	if v, err := parseDue("none"); err != nil || v != nil {
-		t.Errorf("parseDue(none) = %v, %v; want nil to clear the date", v, err)
+func TestParseDate(t *testing.T) {
+	now := time.Date(2026, 10, 21, 15, 4, 0, 0, time.Local) // a Wednesday
+	cases := map[string]string{
+		"2026-11-02": "2026-11-02",
+		"today":      "2026-10-21",
+		"Tomorrow":   "2026-10-22",
+		"fri":        "2026-10-23",
+		"wednesday":  "2026-10-28",
+		"+3d":        "2026-10-24",
+		"+2w":        "2026-11-04",
 	}
-	v, err := parseDue("2026-11-02")
+	for in, want := range cases {
+		got, err := parseDate(in, now)
+		if err != nil || got.Format(time.DateOnly) != want || got.Hour() != 0 {
+			t.Errorf("parseDate(%q) = %v, %v; want local midnight on %s", in, got, err, want)
+		}
+	}
+	for _, bad := range []string{"11/02/2026", "fr", "+3", "+xd", "+-1d", "someday"} {
+		if _, err := parseDate(bad, now); err == nil {
+			t.Errorf("parseDate(%q) succeeded; want an error", bad)
+		}
+	}
+	if v, err := dateField("due", "none", now); err != nil || v != nil {
+		t.Errorf("dateField(none) = %v, %v; want nil to clear the date", v, err)
+	}
+	v, err := dateField("due", "2026-11-02", now)
 	if err != nil {
 		t.Fatal(err)
 	}
 	back, err := time.Parse(time.RFC3339, v.(string))
 	if err != nil || back.Local().Format(time.DateOnly) != "2026-11-02" {
-		t.Errorf("parseDue(2026-11-02) = %v, which reads back as %s locally", v, back.Local())
-	}
-	if _, err := parseDue("11/02/2026"); err == nil {
-		t.Error("parseDue accepted a non-ISO date")
+		t.Errorf("dateField(2026-11-02) = %v, which reads back as %s locally", v, back.Local())
 	}
 }
 
