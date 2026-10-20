@@ -145,6 +145,10 @@ func cmdBucketRm(ctx context.Context, args []string, stdout, stderr io.Writer) i
 	if err := p.deleteBucket(ctx, b); err != nil {
 		return fail(stderr, "bucket rm", err)
 	}
-	fmt.Fprintf(stdout, "Deleted bucket %s (%s) and %s\n", b.ID, b.Name, plural(len(held), "task"))
+	if len(held) > 0 {
+		fmt.Fprintf(stdout, "Deleted bucket %s (%s) and %s\n", b.ID, b.Name, plural(len(held), "task"))
+	} else {
+		fmt.Fprintf(stdout, "Deleted bucket %s (%s)\n", b.ID, b.Name)
+	}
 	return 0
 }

@@ -37,4 +37,6 @@ Dates take `YYYY-MM-DD`, `today`, `tomorrow`, a weekday (the next one after toda
 
 Planner refuses a change that does not name the version it replaces, so xplan reads each item immediately before writing it; if someone changes it in between, xplan says so and the command can be run again. Deleting a bucket through Graph leaves its tasks behind, pointing at a bucket that no longer exists, so `bucket rm` refuses a bucket that holds tasks, and with `--force` deletes the tasks first.
 
+`set --plan` moves a task to another plan, into its first bucket unless `--bucket` names one there. Labels belong to a plan, so a move removes them and says which; `--label` on the same command applies the destination's. A plan with no buckets cannot take a task until it has one.
+
 Creating, deleting and moving whole plans stays in the Planner web app: a plan belongs to a Microsoft 365 group, and xplan's permissions do not reach groups.

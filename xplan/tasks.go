@@ -470,6 +470,7 @@ func cmdAdd(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 
 func cmdSet(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 	tf := newTaskFlags("set", true, true)
+	planRef := tf.fs.String("plan", "", "move the task to this `plan`; --bucket then names a bucket there (default its first)")
 	operands, code := parse(tf.fs, "set <task-id> [flags]", args, 1, 1, stdout, stderr)
 	if code != 0 {
 		return exit(code)
@@ -493,12 +494,52 @@ func cmdSet(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 	if err != nil {
 		return fail(stderr, "set", err)
 	}
-	if err := tf.resolve(ctx, p, t.PlanID, patch); err != nil {
+	planID := t.PlanID
+	if tf.set("plan") {
+		pl, err := p.resolvePlan(ctx, *planRef)
+		if err != nil {
+			return fail(stderr, "set", err)
+		}
+		planID = pl.ID
+		if !tf.set("bucket") && pl.ID != t.PlanID {
+			buckets, err := p.planBuckets(ctx, pl.ID)
+			if err != nil {
+				return fail(stderr, "set", err)
+			}
+			if len(buckets) == 0 {
+				return fail(stderr, "set", fmt.Errorf("plan %q has no buckets, and Planner moves a task only into one; add one with `xplan bucket add`", pl.Title))
+			}
+			patch["bucketId"] = buckets[0].ID
+		}
+	}
+	if err := tf.resolve(ctx, p, planID, patch); err != nil {
 		return fail(stderr, "set", err)
+	}
+	moving := planID != t.PlanID
+	var labels any
+	if moving {
+		labels = patch["appliedCategories"]
+		delete(patch, "appliedCategories")
+		patch["planId"] = planID
 	}
 	if len(patch) > 0 {
 		if err := p.updateTask(ctx, t, patch); err != nil {
 			return fail(stderr, "set", err)
+		}
+	}
+	if moving {
+		if dropped := p.labelNames(ctx, t); len(dropped) > 0 {
+			fmt.Fprintf(stderr, "xplan set: labels belong to a plan, so the move removed %s\n", strings.Join(dropped, ", "))
+		}
+		// Planner ignores labels sent with the move itself.
+		if labels != nil {
+			moved, err := p.getTask(ctx, t.ID)
+			if err == nil {
+				err = p.updateTask(ctx, moved, map[string]any{"appliedCategories": labels})
+			}
+			if err != nil {
+				return fail(stderr, "set", fmt.Errorf("moved the task, but labelling it failed: %w", err))
+			}
 		}
 	}
 	if tf.set("notes") {
