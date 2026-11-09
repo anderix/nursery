@@ -19,6 +19,7 @@ A toolkit for keeping a Debian + GNOME install as slim as possible. Targets curr
 | `strip-gnome.sh` | Removes bloat packages: GNOME apps you don't use, Evolution, LibreOffice, printing, accessibility, scanner, etc. Reinstalls anything accidentally swept up by autoremove. | root |
 | `slim-gsettings.sh` | Applies opinionated GNOME runtime tweaks: disable animations, recent-files history, automount, tracker, hot corner, etc. All reversible via `gsettings reset`. | normal user (gsettings is per-user) |
 | `purge-residual.sh` | Lists and purges packages in dpkg state `rc` (config files left after removal). | root |
+| `geoclue-static.sh` | Gives a machine that does not move a fixed location through GeoClue: installs `geoclue-2.0` if missing, turns on Location Services, writes `/etc/geoclue/static-source` and its conf.d drop-in, restarts geoclue. Takes `<latitude> <longitude> [accuracy-m]`; with no arguments it only reports the current setup. | normal user (uses sudo for `/etc`) |
 
 ## Conventions
 
