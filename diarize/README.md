@@ -1,21 +1,14 @@
 # diarize
 
-> **Verdict (2026-06-16): shelved.** This harness answered its question, and the
-> answer was no. Across two real meetings, sherpa-onnx could not reliably separate
-> speakers on the mono audio the `meeting` tool captures — it collapsed distinct
-> people (the two main speakers in one test) into a single cluster,
-> worst on phone-joined / far-field recordings where every voice arrives through
-> one speaker. Confident misattribution is worse than the honest "don't know" you
-> get from plain transcription, so this is **not** graduating into `meeting`; that
-> tool's MIC/SYS channel separation stays the approach. The code is left here as
-> the record of the experiment. Reopening would need a materially different input
-> (true per-speaker multichannel capture), not more tuning. The rest of this README
-> documents the harness as built.
-
-**Experimental.** A test harness for speaker diarization — labeling *who* spoke,
-not just what was said. It exists to answer one question before any of this goes
-near the `meeting` tool: **is sherpa-onnx diarization good enough on real meeting
-audio?** Until that's proven, this stays a standalone sibling tool.
+**Shelved.** A test harness for speaker diarization — labeling *who* spoke, not
+just what was said — built to answer whether sherpa-onnx diarization is good
+enough on real meeting audio to join the `meeting` tool. It is not: on the mono
+audio `meeting` captures, it merges distinct speakers into one cluster, worst on
+phone-joined and far-field recordings where every voice arrives through one
+speaker. A confident wrong label is worse than plain transcription, so `meeting`
+keeps its MIC/SYS channel separation, and this code stays as the record of the
+experiment. Reopening it needs a different input, true per-speaker multichannel
+capture, rather than more tuning. The rest of this README documents the harness.
 
 It transcribes a single audio stream with whisper and, in parallel, runs
 [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx) speaker diarization, then

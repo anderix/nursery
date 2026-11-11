@@ -23,7 +23,7 @@ That installs the quick tools. The heavy ones — `meeting` (builds whisper.cpp)
 | **naked-gnome** | Audit and trim a fat Debian + GNOME install — packages, autostart, services, firmware, gsettings, disk junk |
 | **pdf-extract** | Extract text/content from PDFs |
 | **meeting** | Record a meeting (mic + system audio, separate channels) and transcribe it locally with whisper.cpp |
-| **diarize** | _Experimental._ Speaker-diarization test harness (whisper + sherpa-onnx); proving ground before it joins `meeting` |
+| **diarize** | _Shelved._ Speaker-diarization test harness (whisper + sherpa-onnx); it cannot separate speakers on the audio `meeting` captures, so it stays here as the record of the experiment |
 | **screen-ocr** | OCR on a screen region |
 | **select** | Database viewer — URL paths as SQL, returns HTML/CSV/JSON |
 | **utf8rescue** | Convert Windows-1252 text to UTF-8, including files that mix the two, which iconv corrupts |
@@ -36,4 +36,4 @@ That installs the quick tools. The heavy ones — `meeting` (builds whisper.cpp)
 | **aski** | One-shot questions for command-line LLMs — succeeds `ask`, which wrapped one hard-coded `claude -p` invocation | [excelano/aski](https://github.com/excelano/aski) |
 | **ved** | The verbose ed — a drop-in ed clone in pure-stdlib Rust | [excelano/ved](https://github.com/excelano/ved) |
 | **ditto** | Cargo for documents — build Office and HTML deliverables from text sources, then publish to SharePoint | [excelano/ditto](https://github.com/excelano/ditto) |
-| **office-convert** | Convert Markdown/CSV ↔ Word/Excel/PowerPoint (md→docx/pptx, csv↔xlsx) via pandoc + openpyxl | [excelano/office-convert](https://github.com/excelano/office-convert) |
+| **this2that** | Small converters: Markdown and CSV to Word, Excel and PowerPoint, and SQLite and Parquet to CSV and spreadsheets | [excelano/this2that](https://github.com/excelano/this2that) |
